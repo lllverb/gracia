@@ -1,0 +1,36 @@
+.article-title
+  %h1 タイトル
+  %input{value: "#{@article.title}"}
+.article-text
+  %h2 本文
+  .article-area
+    - @article.texts.order("number").each do |t|
+      - if t.article_type == "本文"
+        .article-box{id: t.number}
+          %textarea
+            = t.text
+          .button-area
+            .forward
+              上へ
+            .backward
+              下へ
+            .remove
+              削除
+      - else
+        aa
+.article-new
+  %h2 新規作成
+  .article-new__box
+    .article-new__box--type
+      .heading
+        見出し
+      .text
+        本文
+      .related
+        関連記事
+    %textarea#new-article
+    .button-area
+      #save-button
+        保存する
+      #cancel-button
+        キャンセル

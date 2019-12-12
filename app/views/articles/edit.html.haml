@@ -1,13 +1,30 @@
+.edit-top
+  %h1 
+    = "記事編集(記事ID:#{@article.id})"
 .article-title
-  %h1 タイトル
-  %input{value: "#{@article.title}"}
+  %h2 タイトル
+  %input.title{value: "#{@article.title}"}
+  %h2 説明文
+  %textarea.detail
+    = @article.detail
 .article-text
   %h2 本文
   .article-area
     - @article.texts.order("number").each do |t|
       - if t.article_type == "本文"
         .article-box{id: t.number}
-          %textarea
+          .textarea
+            = t.text
+          .button-area
+            .forward
+              上へ
+            .backward
+              下へ
+            .remove
+              削除
+      - elsif t.article_type == "見出し"
+        .article-box{id: t.number}
+          .textarea.heading
             = t.text
           .button-area
             .forward
@@ -17,18 +34,38 @@
             .remove
               削除
       - else
-        aa
+        .article-box{id: t.number}
+          .textarea.related
+            %h3
+              = "#{Article.find(t.text).title}"
+            %p
+              = "#{Article.find(t.text).detail}"
+          .button-area
+            .forward
+              上へ
+            .backward
+              下へ
+            .remove
+              削除
 .article-new
   %h2 新規作成
   .article-new__box
     .article-new__box--type
-      .heading
+      .tab
         見出し
-      .text
+      .tab.is-active
         本文
-      .related
+      .tab
         関連記事
-    %textarea#new-article
+    .panel
+      %textarea
+    .panel.is-show
+      %textarea.new-article
+    .panel
+      %select.selectbox
+        - @others.each do |o|
+          %option{value: o.id}
+            = "【ID:#{o.id}】#{o.title}"
     .button-area
       #save-button
         保存する

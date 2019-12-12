@@ -5,7 +5,6 @@ $(function () {
     $.ajax({
       url: url + 'remove_article',
       type: 'DELETE',
-      dataType: 'json',
       data: {
         number: number
       }
@@ -13,6 +12,8 @@ $(function () {
       .done(function () {
         changeClass(number)
         $(`#${number}`).remove()
+        addDisableForwardClass()
+        addDisableBackwardClass()
       })
       .fail(function () {
         alert('通信に失敗しました')

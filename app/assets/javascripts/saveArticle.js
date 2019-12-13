@@ -10,7 +10,7 @@ $(function () {
           title: title,
         }
       })
-        .done(function (data) {
+        .done(function () {
         })
         .fail(function () {
           alert('通信に失敗しました')
